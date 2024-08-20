@@ -46,4 +46,4 @@ strat_dict = {'title':'Average', 'meta_score':strat_avg, 'user_score':strat_avg,
 StrategyGames = StrategyGames._append(strat_dict, ignore_index = True)
 
 print(ActionGames)
-
+ 
