@@ -1,4 +1,5 @@
 import pandas as pd
+import matplotlib as plt
 
 #Loading and Cleaning
 nintendoGames_df = pd.read_csv('Data/NintendoGames.csv')
@@ -27,7 +28,7 @@ actA_meta_avg = ActionAdventureGames.loc[:, 'meta_score'].mean()
 actA_meta_avg = round(actA_meta_avg, 0)
 actA_user_avg = ActionAdventureGames.loc[:,'user_score'].mean()
 actA_user_avg = round(actA_user_avg,0)
-actA_dict = {'title':'Average', 'meta_score':actA_meta_avg, 'user_score':actA_user_avg, 'platform':'Nintendo', 'genres':['Action']}
+actA_dict = {'title':'Average', 'meta_score':actA_meta_avg, 'user_score':actA_user_avg, 'platform':'Nintendo', 'genres':['Action Adventure']}
 ActionAdventureGames = ActionGames._append(actA_dict, ignore_index = True)
 
 FantasyGames = nintendoGames_df[nintendoGames_df["genres"].str.contains('Fantasy')]
@@ -35,7 +36,7 @@ ftsy_meta_avg = FantasyGames.loc[:, 'meta_score'].mean()
 ftsy_meta_avg = round(ftsy_meta_avg, 0)
 ftsy_user_avg = FantasyGames.loc[:,'user_score'].mean()
 ftsy_user_avg = round(ftsy_user_avg,0)
-ftsy_dict = {'title':'Average', 'meta_score':ftsy_meta_avg, 'user_score':ftsy_user_avg, 'platform':'Nintendo', 'genres':['Action']}
+ftsy_dict = {'title':'Average', 'meta_score':ftsy_meta_avg, 'user_score':ftsy_user_avg, 'platform':'Nintendo', 'genres':['Fantasy']}
 FantasyGames = FantasyGames._append(ftsy_dict, ignore_index = True)
 
 PartyGames = nintendoGames_df[nintendoGames_df["genres"].str.contains('Party')]
@@ -43,7 +44,7 @@ prty_meta_avg = PartyGames.loc[:, 'meta_score'].mean()
 prty_meta_avg = round(prty_meta_avg, 0)
 prty_user_avg = PartyGames.loc[:,'user_score'].mean()
 prty_user_avg = round(prty_user_avg,0)
-prty_dict = {'title':'Average', 'meta_score':prty_meta_avg, 'user_score':prty_user_avg, 'platform':'Nintendo', 'genres':['Action']}
+prty_dict = {'title':'Average', 'meta_score':prty_meta_avg, 'user_score':prty_user_avg, 'platform':'Nintendo', 'genres':['Party']}
 PartyGames = PartyGames._append(prty_dict, ignore_index = True)
 
 PlatformerGames = nintendoGames_df[nintendoGames_df["genres"].str.contains('Platformer')]
@@ -51,7 +52,7 @@ plfmr_meta_avg = PlatformerGames.loc[:, 'meta_score'].mean()
 plfmr_meta_avg = round(plfmr_meta_avg, 0)
 plfmr_user_avg = PlatformerGames.loc[:,'user_score'].mean()
 plfmr_user_avg = round(plfmr_user_avg,0)
-plfmr_dict = {'title':'Average', 'meta_score':plfmr_meta_avg, 'user_score':plfmr_user_avg, 'platform':'Nintendo', 'genres':['Action']}
+plfmr_dict = {'title':'Average', 'meta_score':plfmr_meta_avg, 'user_score':plfmr_user_avg, 'platform':'Nintendo', 'genres':['Platformer']}
 PlatformerGames = PlatformerGames._append(plfmr_dict, ignore_index = True)
 
 RacingGames = nintendoGames_df[nintendoGames_df["genres"].str.contains('Racing')]
@@ -59,7 +60,7 @@ rce_meta_avg = RacingGames.loc[:, 'meta_score'].mean()
 rce_meta_avg = round(rce_meta_avg, 0)
 rce_user_avg = RacingGames.loc[:,'user_score'].mean()
 rce_user_avg = round(rce_user_avg,0)
-rce_dict = {'title':'Average', 'meta_score':rce_meta_avg, 'user_score':rce_user_avg, 'platform':'Nintendo', 'genres':['Action']}
+rce_dict = {'title':'Average', 'meta_score':rce_meta_avg, 'user_score':rce_user_avg, 'platform':'Nintendo', 'genres':['Racing']}
 RacingGames = RacingGames._append(rce_dict, ignore_index = True)
 
 RolePlayingGames = nintendoGames_df[nintendoGames_df["genres"].str.contains('Role-Playing')]
@@ -67,7 +68,7 @@ rpg_meta_avg = RolePlayingGames.loc[:, 'meta_score'].mean()
 rpg_meta_avg = round(rpg_meta_avg, 0)
 rpg_user_avg = RolePlayingGames.loc[:,'user_score'].mean()
 rpg_user_avg = round(rpg_user_avg,0)
-rpg_dict = {'title':'Average', 'meta_score':rpg_meta_avg, 'user_score':rpg_user_avg, 'platform':'Nintendo', 'genres':['Action']}
+rpg_dict = {'title':'Average', 'meta_score':rpg_meta_avg, 'user_score':rpg_user_avg, 'platform':'Nintendo', 'genres':['Role-Playing']}
 RolePlayingGames = RolePlayingGames._append(rpg_dict, ignore_index = True)
 
 SimulationGames = nintendoGames_df[nintendoGames_df["genres"].str.contains('Simulation')]
@@ -75,19 +76,27 @@ sim_meta_avg = SimulationGames.loc[:, 'meta_score'].mean()
 sim_meta_avg = round(sim_meta_avg, 0)
 sim_user_avg = SimulationGames.loc[:,'user_score'].mean()
 sim_user_avg = round(sim_user_avg,0)
-sim_dict = {'title':'Average', 'meta_score':sim_meta_avg, 'user_score':sim_user_avg, 'platform':'Nintendo', 'genres':['Action']}
-Games = SimulationGames._append(sim_dict, ignore_index = True)
+sim_dict = {'title':'Average', 'meta_score':sim_meta_avg, 'user_score':sim_user_avg, 'platform':'Nintendo', 'genres':['Simulation']}
+SimulationGames = SimulationGames._append(sim_dict, ignore_index = True)
 
 StrategyGames = nintendoGames_df[nintendoGames_df["genres"].str.contains('Strategy')]
 strat_meta_avg = StrategyGames.loc[:, 'meta_score'].mean()
 strat_meta_avg = round(strat_meta_avg, 0)
 strat_user_avg = StrategyGames.loc[:,'user_score'].mean()
 strat_user_avg = round(strat_user_avg,0)
-strat_dict = {'title':'Average', 'meta_score':strat_meta_avg, 'user_score':strat_user_avg, 'platform':'Nintendo', 'genres':['Action']}
-Games = Games._append(strat_dict, ignore_index = True)
+strat_dict = {'title':'Average', 'meta_score':strat_meta_avg, 'user_score':strat_user_avg, 'platform':'Nintendo', 'genres':['Strategy']}
+simulationGames = SimulationGames._append(strat_dict, ignore_index = True)
 
 def ogData():
     print(ogNintendoGames_df)
+    try:
+        reset = int(input("type 1 to return to start: "))
+        if reset == 1:
+            mainloop()
+        else:
+            print('teehee Try again\n')
+    except:
+        print('teehee That\'s not a number! :( What would Mr Groome say?\n')
 
 def genres():
     print("""
@@ -128,20 +137,36 @@ def genres():
         elif choiceGenre == 10:
             mainloop()
         elif choiceGenre == 11:
-            print("go to https://www.youtube.com/watch?v=dQw4w9WgXcQ if u r cool like Mr Scott :)")
+            print("go to https://www.youtube.com/watch?v=QB7ACr7pUuE if u r cool like Mr Scott :)\n")
         else:
             print('teehee Try again')
 
-        reset = int(input("type 1 to return to start, type 2 to look at another genre."))
+        reset = int(input("type 1 to return to start, type 2 to look at another genre.\n"))
         if reset == 1:
             mainloop()
         elif reset == 2:
             genres()
         else:
-            print('teehee Try again')
+            print('teehee Try again\n')
             
     except:
-        print('teehee That\'s not a number! :( What would Mr Groome say?')
+        print('teehee That\'s not a number! :( What would Mr Groome say?\n')
+
+def compareAverages():
+    global genreAverages_df
+    averagesList = [act_dict, actA_dict, ftsy_dict, prty_dict, plfmr_dict, rce_dict, rpg_dict, sim_dict, strat_dict]
+    genreAverages_df = pd.DataFrame(averagesList)
+    print(genreAverages_df)
+
+def displayAverages():
+    genreAverages_df.plot(kind='bar',
+                    x='title',
+                    y='meta_score',
+                    color='blue',
+                    alpha=0.3,
+                    title='ratings by genre from users and critics.')
+                    
+    plt.show()
 
 def keyWordFinder():
     keyword = input("Input keyword: ")
@@ -155,9 +180,9 @@ def keyWordFinder():
         elif reset == 2:
             keyWordFinder()
         else:
-            print('teehee Try again')
+            print('teehee Try again\n')
     except:
-        print('teehee That\'s not a number! :( What would Mr Groome say?')
+        print('teehee That\'s not a number! :( What would Mr Groome say?\n')
 
 def mainloop():
     global quit
@@ -180,19 +205,23 @@ def mainloop():
 
         elif choice == 2:
             genres()
+
         elif choice == 3:
-            print()
+            compareAverages()
+
         elif choice == 4:
             print()
+
         elif choice == 5:
             keyWordFinder()
+
         elif choice == 6:
             quit = True
         else:
-            print('TEE HEE. Try again')
+            print('TEE HEE. Try again\n')
 
     except:
-        print('TEE HEE. That\'s not a number :( What would Mr Groome say.')
+        print('TEE HEE. That\'s not a number :( What would Mr Groome say.\n')
 
 
 while quit != True:
