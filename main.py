@@ -164,11 +164,11 @@ def compareAverages():
     print(genreAverages_df)
 
 def displayAverages():
-    fig = plt.figure() # Create matplotlib figure
+    fig = plt.figure()
 
-    ax = fig.add_subplot(111) # Create matplotlib axes
-    ax2 = ax.twinx() # Create another axes that shares the same x-axis as ax.
-    bars = ('Action', 'ActAdvent', 'Fantasy', 'Party', 'Pltfmr', 'Racing', 'RPG', 'Sim', 'Strategy')
+    ax = fig.add_subplot(111)
+    ax2 = ax.twinx()
+    bars = ('Action', 'Advent', 'Fntsy', 'Party', 'Pltfmr', 'Racing', 'RPG', 'Sim', 'Strategy')
     x_pos = np.arange(len(bars))
 
     width = 0.4
@@ -178,7 +178,8 @@ def displayAverages():
 
     ax.set_ylabel('meta score')
     ax2.set_ylabel('user score')
-    plt.xticks(x_pos, bars)               
+    plt.xticks(x_pos, bars)           
+    plt.savefig('Images/viualisedData.png')    
     plt.show()
 
 def keyWordFinder():
@@ -212,35 +213,35 @@ def mainloop():
     5 - Search for game/s by keyword
     6 - Quit Program and save files to pc
         """)
-    #try:
-    choice = int(input('Select Number: '))
+    try:
+        choice = int(input('Select Number: '))
 
-    if choice == 1:
-        ogData()
+        if choice == 1:
+            ogData()
 
-    elif choice == 2:
-        genres()
+        elif choice == 2:
+            genres()
 
-    elif choice == 3:
-        compareAverages()
+        elif choice == 3:
+            compareAverages()
 
-    elif choice == 4:
-        displayAverages()
+        elif choice == 4:
+            displayAverages()
 
-    elif choice == 5:
-        keyWordFinder()
+        elif choice == 5:
+            keyWordFinder()
 
-    elif choice == 6:
-        ogNintendoGames_df.to_csv("Data/CleanedDataset.csv")
-        genreAverages_df.to_csv("Data/AnalysedDataset.csv")
-        quit = True
-    
-    else:
+        elif choice == 6:
+            ogNintendoGames_df.to_csv("Data/CleanedDataset.csv")
+            genreAverages_df.to_csv("Data/AnalysedDataset.csv")
+            quit = True
+        
+        else:
 
-        print('TEE HEE. Try again\n')
+            print('TEE HEE. Try again\n')
 
-    #except:
-        #print('TEE HEE. That\'s not a number :( What would Mr Groome say.\n')
+    except:
+        print('TEE HEE. That\'s not a number :( What would Mr Groome say.\n')
 
 
 while quit != True:
