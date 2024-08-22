@@ -7,6 +7,7 @@ try:
 
 except:
     print("File could not be loaded.")
+    
 nintendoGames_df.dropna(inplace=True)
 nintendoGames_df = nintendoGames_df[['title','meta_score','user_score','platform','genres']]
 nintendoGames_df.drop_duplicates(inplace=True)
@@ -167,7 +168,7 @@ def displayAverages():
 
     ax = fig.add_subplot(111) # Create matplotlib axes
     ax2 = ax.twinx() # Create another axes that shares the same x-axis as ax.
-    bars = ('Action', 'Action Adventure', 'Fantasy', 'Party', 'Platformer', 'Racing', 'RPG', 'Sim', 'Strategy')
+    bars = ('Action', 'ActAdvent', 'Fantasy', 'Party', 'Pltfmr', 'Racing', 'RPG', 'Sim', 'Strategy')
     x_pos = np.arange(len(bars))
 
     width = 0.4
@@ -195,7 +196,7 @@ def keyWordFinder():
             print('teehee Try again\n')
     except:
         print('teehee That\'s not a number! :( What would Mr Groome say?\n')
-#def saveFiles():
+
     
 
 def mainloop():
@@ -209,8 +210,7 @@ def mainloop():
     3 - Compare average scores given by critics and users
     4 - Display average scores given by critics and users in graph form
     5 - Search for game/s by keyword
-    6 - Write files to your computer
-    7 - Quit Program
+    6 - Quit Program and save files to pc
         """)
     #try:
     choice = int(input('Select Number: '))
@@ -231,13 +231,16 @@ def mainloop():
         keyWordFinder()
 
     elif choice == 6:
+        ogNintendoGames_df.to_csv("Data/CleanedDataset.csv")
+        genreAverages_df.to_csv("Data/AnalysedDataset.csv")
         quit = True
     
     else:
+
         print('TEE HEE. Try again\n')
 
     #except:
-       #print('TEE HEE. That\'s not a number :( What would Mr Groome say.\n')
+        #print('TEE HEE. That\'s not a number :( What would Mr Groome say.\n')
 
 
 while quit != True:
