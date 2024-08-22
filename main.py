@@ -2,7 +2,11 @@ import pandas as pd
 import matplotlib as plt
 
 #Loading and Cleaning
-nintendoGames_df = pd.read_csv('Data/NintendoGames.csv')
+try:
+    nintendoGames_df = pd.read_csv('Data/NintendoGames.csv')
+
+except:
+    print("File could not be loaded.")
 nintendoGames_df.dropna(inplace=True)
 nintendoGames_df = nintendoGames_df[['title','meta_score','user_score','platform','genres']]
 nintendoGames_df.drop_duplicates(inplace=True)
@@ -183,6 +187,8 @@ def keyWordFinder():
             print('teehee Try again\n')
     except:
         print('teehee That\'s not a number! :( What would Mr Groome say?\n')
+def saveFiles():
+    
 
 def mainloop():
     global quit
@@ -195,7 +201,8 @@ def mainloop():
     3 - Compare average scores given by critics and users
     4 - Display average scores given by critics and users in graph form
     5 - Search for game/s by keyword
-    6 - Quit Program
+    6 - Write files to your computer
+    7 - Quit Program
         """)
     try:
         choice = int(input('Select Number: '))
@@ -216,7 +223,11 @@ def mainloop():
             keyWordFinder()
 
         elif choice == 6:
+            saveFiles()
+
+        elif choice == 7:
             quit = True
+        
         else:
             print('TEE HEE. Try again\n')
 
