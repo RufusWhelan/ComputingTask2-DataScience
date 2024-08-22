@@ -1,6 +1,6 @@
 import pandas as pd
-import matplotlib as plt
-
+import matplotlib.pyplot as plt
+import numpy as np
 #Loading and Cleaning
 try:
     nintendoGames_df = pd.read_csv('Data/NintendoGames.csv')
@@ -91,6 +91,9 @@ strat_user_avg = round(strat_user_avg,0)
 strat_dict = {'title':'Average', 'meta_score':strat_meta_avg, 'user_score':strat_user_avg, 'platform':'Nintendo', 'genres':['Strategy']}
 simulationGames = SimulationGames._append(strat_dict, ignore_index = True)
 
+averagesList = [act_dict, actA_dict, ftsy_dict, prty_dict, plfmr_dict, rce_dict, rpg_dict, sim_dict, strat_dict]
+genreAverages_df = pd.DataFrame(averagesList)
+
 def ogData():
     print(ogNintendoGames_df)
     try:
@@ -157,19 +160,24 @@ def genres():
         print('teehee That\'s not a number! :( What would Mr Groome say?\n')
 
 def compareAverages():
-    global genreAverages_df
-    averagesList = [act_dict, actA_dict, ftsy_dict, prty_dict, plfmr_dict, rce_dict, rpg_dict, sim_dict, strat_dict]
-    genreAverages_df = pd.DataFrame(averagesList)
     print(genreAverages_df)
 
 def displayAverages():
-    genreAverages_df.plot(kind='bar',
-                    x='title',
-                    y='meta_score',
-                    color='blue',
-                    alpha=0.3,
-                    title='ratings by genre from users and critics.')
-                    
+    fig = plt.figure() # Create matplotlib figure
+
+    ax = fig.add_subplot(111) # Create matplotlib axes
+    ax2 = ax.twinx() # Create another axes that shares the same x-axis as ax.
+    bars = ('Action', 'Action Adventure', 'Fantasy', 'Party', 'Platformer', 'Racing', 'RPG', 'Sim', 'Strategy')
+    x_pos = np.arange(len(bars))
+
+    width = 0.4
+
+    genreAverages_df.meta_score.plot(kind='bar', color='red', ax=ax, width=width, position=1)
+    genreAverages_df.user_score.plot(kind='bar', color='blue', ax=ax2, width=width, position=0)
+
+    ax.set_ylabel('meta score')
+    ax2.set_ylabel('user score')
+    plt.xticks(x_pos, bars)               
     plt.show()
 
 def keyWordFinder():
@@ -187,7 +195,7 @@ def keyWordFinder():
             print('teehee Try again\n')
     except:
         print('teehee That\'s not a number! :( What would Mr Groome say?\n')
-def saveFiles():
+#def saveFiles():
     
 
 def mainloop():
@@ -204,35 +212,32 @@ def mainloop():
     6 - Write files to your computer
     7 - Quit Program
         """)
-    try:
-        choice = int(input('Select Number: '))
+    #try:
+    choice = int(input('Select Number: '))
 
-        if choice == 1:
-            ogData()
+    if choice == 1:
+        ogData()
 
-        elif choice == 2:
-            genres()
+    elif choice == 2:
+        genres()
 
-        elif choice == 3:
-            compareAverages()
+    elif choice == 3:
+        compareAverages()
 
-        elif choice == 4:
-            print()
+    elif choice == 4:
+        displayAverages()
 
-        elif choice == 5:
-            keyWordFinder()
+    elif choice == 5:
+        keyWordFinder()
 
-        elif choice == 6:
-            saveFiles()
+    elif choice == 6:
+        quit = True
+    
+    else:
+        print('TEE HEE. Try again\n')
 
-        elif choice == 7:
-            quit = True
-        
-        else:
-            print('TEE HEE. Try again\n')
-
-    except:
-        print('TEE HEE. That\'s not a number :( What would Mr Groome say.\n')
+    #except:
+       #print('TEE HEE. That\'s not a number :( What would Mr Groome say.\n')
 
 
 while quit != True:
