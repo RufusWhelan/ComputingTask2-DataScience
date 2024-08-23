@@ -2,24 +2,37 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 #Loading and Cleaning
-try:
-    nintendoGames_df = pd.read_csv('Data/NintendoGames.csv')
+try: # checks if file can be loaded
+    nintendoGames_df = pd.read_csv('Data/NintendoGames.csv') #loads file if it's there
 
 except:
-    print("File could not be loaded.")
+    print("File could not be loaded.") #prints error if the file cannot be found
     
-nintendoGames_df.dropna(inplace=True)
-nintendoGames_df = nintendoGames_df[['title','meta_score','user_score','platform','genres']]
-nintendoGames_df.drop_duplicates(inplace=True)
-nintendoGames_df = nintendoGames_df[nintendoGames_df.platform != "iOS"]
+nintendoGames_df.dropna(inplace=True) #drops rows with missing values
+nintendoGames_df = nintendoGames_df[['title','meta_score','user_score','platform','genres']] #reanges and filters out some columns
+nintendoGames_df.drop_duplicates(inplace=True) # drops any duplicate values
+nintendoGames_df = nintendoGames_df[nintendoGames_df.platform != "iOS"] #removes any ios games
+
+#
 nintendoGames_df = nintendoGames_df.query(f'not title.str.contains("Wave")', engine='python')
 nintendoGames_df = nintendoGames_df.query(f'not title.str.contains("DLC")', engine='python')
 nintendoGames_df = nintendoGames_df.query(f'not title.str.contains("Edition")', engine='python')
-nintendoGames_df['user_score'] = nintendoGames_df['user_score'].multiply(10)
-nintendoGames_df = nintendoGames_df.reset_index(drop=True) #Resets index so row numbers make sense
-ogNintendoGames_df = nintendoGames_df
-#
+# this block of code removes all games that contain 'Wave', 'DLC' or 'Edition' as they are not full games either
 
+nintendoGames_df['user_score'] = nintendoGames_df['user_score'].multiply(10) # multiplies user scores by 10 so that they are at the same magnitude as critc scors
+
+nintendoGames_df = nintendoGames_df.reset_index(drop=True) #Resets index so row numbers make sense
+ogNintendoGames_df = nintendoGames_df # saves the cleaned file for later use
+
+
+"""
+The following lines of code marked by '#' do the following in order:
+filter nintendoGames_df into target genres.
+calculates averages for meta and user scores respectively, before rounding them to 0dp. 
+creates a new dictionary with the averages.
+adds this new row back to the dataframe
+"""
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ActionGames = nintendoGames_df[nintendoGames_df["genres"].str.contains('Action\'')]
 act_meta_avg = ActionGames.loc[:, 'meta_score'].mean()
 act_meta_avg = round(act_meta_avg, 0)
@@ -91,14 +104,15 @@ strat_user_avg = StrategyGames.loc[:,'user_score'].mean()
 strat_user_avg = round(strat_user_avg,0)
 strat_dict = {'title':'Average', 'meta_score':strat_meta_avg, 'user_score':strat_user_avg, 'platform':'Nintendo', 'genres':['Strategy']}
 simulationGames = SimulationGames._append(strat_dict, ignore_index = True)
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-averagesList = [act_dict, actA_dict, ftsy_dict, prty_dict, plfmr_dict, rce_dict, rpg_dict, sim_dict, strat_dict]
-genreAverages_df = pd.DataFrame(averagesList)
+averagesList = [act_dict, actA_dict, ftsy_dict, prty_dict, plfmr_dict, rce_dict, rpg_dict, sim_dict, strat_dict] # creates a new list using the generated average dictionaries
+genreAverages_df = pd.DataFrame(averagesList) #saves the list as a new dataframe.
 
 def ogData():
-    print(ogNintendoGames_df)
+    print(ogNintendoGames_df) #prints the cleaned datset
     try:
-        reset = int(input("type 1 to return to start: "))
+        reset = int(input("type 1 to return to start: ")) #asks the user for an input to return to the main loop
         if reset == 1:
             mainloop()
         else:
@@ -120,7 +134,7 @@ def genres():
     9 - Strategy
     10 - Back
     11 - teehee special surprise.      
-    """)
+    """) #prints user options
     try:
         choiceGenre = int(input('Select Number: '))
 
@@ -149,6 +163,8 @@ def genres():
         else:
             print('teehee Try again')
 
+        #asks for user input theb runs the corresponding code.
+
         reset = int(input("type 1 to return to start, type 2 to look at another genre.\n"))
         if reset == 1:
             mainloop()
@@ -156,37 +172,39 @@ def genres():
             genres()
         else:
             print('teehee Try again\n')
-            
+        # if the use types 1 they return to the mainloop if they type to they can look at another genre
     except:
         print('teehee That\'s not a number! :( What would Mr Groome say?\n')
 
 def compareAverages():
-    print(genreAverages_df)
+    print(genreAverages_df) #prints the genreAverages dataframe
 
 def displayAverages():
-    fig = plt.figure()
+    fig = plt.figure() #creates figure
 
     ax = fig.add_subplot(111)
     ax2 = ax.twinx()
-    bars = ('Action', 'Advent', 'Fntsy', 'Party', 'Pltfmr', 'Racing', 'RPG', 'Sim', 'Strategy')
+    #assigns two y vales for chart
+
+    bars = ('Action', 'Advent', 'Fntsy', 'Party', 'Pltfmr', 'Racing', 'RPG', 'Sim', 'Strategy') #creates a list of genre titles
     x_pos = np.arange(len(bars))
 
     width = 0.4
 
-    genreAverages_df.meta_score.plot(kind='bar', color='red', ax=ax, width=width, position=1)
-    genreAverages_df.user_score.plot(kind='bar', color='blue', ax=ax2, width=width, position=0)
+    genreAverages_df.meta_score.plot(kind='bar', color='red', ax=ax, width=width, position=1) #plots first bar type of graph
+    genreAverages_df.user_score.plot(kind='bar', color='blue', ax=ax2, width=width, position=0) #plots second bar type of graph
 
-    ax.set_ylabel('meta score')
-    ax2.set_ylabel('user score')
+    ax.set_ylabel('meta score') #adds label
+    ax2.set_ylabel('user score') #adds label
     plt.xticks(x_pos, bars)           
-    plt.savefig('Images/viualisedData.png')    
-    plt.show()
+    plt.savefig('Images/viualisedData.png') #saves the figure as a png 
+    plt.show() #shows the figure
 
 def keyWordFinder():
-    keyword = input("Input keyword: ")
-    keyword = keyword.title()
-    Searched = nintendoGames_df[nintendoGames_df["title"].str.contains(keyword)]
-    print(Searched)
+    keyword = input("Input keyword: ") #asks user for input
+    keyword = keyword.title() #captalises the first letter of every word
+    Searched = nintendoGames_df[nintendoGames_df["title"].str.contains(keyword)] #searches for any games with that keyword
+    print(Searched) #prints any games with that keyword.
     try:
         reset = int(input("type 1 to return to start, type 2 to enter a different keyword."))
         if reset == 1:
@@ -197,11 +215,11 @@ def keyWordFinder():
             print('teehee Try again\n')
     except:
         print('teehee That\'s not a number! :( What would Mr Groome say?\n')
-
+    #if they type one they return to start or they type 2 they can search for another word
     
 
-def mainloop():
-    global quit
+def mainloop(): #runs differen functions based on user input
+    global quit #creates global variable
 
     print("""This is a collection of data based on reviews for Nintendo Games. Have fun :)
           
@@ -235,7 +253,7 @@ def mainloop():
             ogNintendoGames_df.to_csv("Data/CleanedDataset.csv")
             genreAverages_df.to_csv("Data/AnalysedDataset.csv")
             quit = True
-        
+        # On quit saves dataframes as csv files on users device.
         else:
 
             print('TEE HEE. Try again\n')
@@ -244,5 +262,5 @@ def mainloop():
         print('TEE HEE. That\'s not a number :( What would Mr Groome say.\n')
 
 
-while quit != True:
+while quit != True: #until quit = true run mainloop
     mainloop()
